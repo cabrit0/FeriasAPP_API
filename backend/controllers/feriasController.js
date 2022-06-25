@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
 
 const Ferias = require("../models/feriasModel");
+const User = require("../models/userModel");
 
 // @ desc     Get Ferias
 // @ route    GET /api/v1/ferias
 // @ access   private
 const getFerias = asyncHandler(async (req, res) => {
-  const ferias = await Ferias.find();
+  const ferias = await Ferias.find({ user: req.user.id });
   res.status(200).json(ferias);
 });
 
@@ -29,6 +30,7 @@ const createFerias = asyncHandler(async (req, res) => {
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
+    user: req.body.id,
   });
   res.status(200).json(feria);
 });
@@ -41,7 +43,13 @@ const updateFerias = asyncHandler(async (req, res) => {
 
   if (!feria) {
     res.status(400);
-    throw new Error("Feria not found");
+    throw new Error("Féria not found");
+  }
+
+  //check if user exists
+  if (feria.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
   }
 
   const updatedFeria = await Ferias.findByIdAndUpdate(req.params.id, req.body, {
@@ -54,7 +62,32 @@ const updateFerias = asyncHandler(async (req, res) => {
 // @ route    DELETE /api/v1/ferias/:id
 // @ access   private
 const deleteFerias = asyncHandler(async (req, res) => {
-  res.send("DELETE FERIAS");
+  const feria = await Ferias.findById(req.params);
+
+  if (!feria) {
+    res.status(400);
+    throw new Error("Féria not found");
+  }
+
+  res.json({
+    message: "Féria deleted",
+  });
+
+  //check if user exists
+  if (!req.user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  //ensure logged in user matches feria user
+  if (feria.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  await feria.remove();
+
+  res.status(200).json({ id: req.params.id });
 });
 
 module.exports = {

@@ -8,7 +8,9 @@ const {
   deleteFerias,
 } = require("../controllers/feriasController");
 
-router.route("/").get(getFerias).post(createFerias);
-router.route("/:id").put(updateFerias).delete(deleteFerias);
+const { protect } = require("../middlewares/authMiddleware");
+
+router.route("/").get(protect, getFerias).post(protect, createFerias);
+router.route("/:id").put(protect, updateFerias).delete(protect, deleteFerias);
 
 module.exports = router;

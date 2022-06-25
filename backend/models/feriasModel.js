@@ -3,11 +3,11 @@ const moment = require("moment");
 
 const feriasSchema = mongoose.Schema(
   {
-    /*  user: {
+     user: {
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "User",
-    }, */
+    },
 
     totalFerias: {
       type: Number,

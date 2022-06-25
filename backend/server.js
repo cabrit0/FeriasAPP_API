@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/api/v1/ferias", require("./routes/feriasRoutes"));
+app.use("/api/v1/users", require("./routes/userRoutes"));
 
 app.use(errorHandler);
 
