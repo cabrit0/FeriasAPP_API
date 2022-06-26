@@ -7,19 +7,48 @@ const User = require("../models/userModel");
 // @ route    GET /api/v1/ferias
 // @ access   private
 const getFerias = asyncHandler(async (req, res) => {
-  const ferias = await Ferias.find({ user: req.user.id });
-  res.status(200).json(ferias);
+  const ferias = await Ferias.find();
+  const allResults = await Ferias.countDocuments({});
+  console.log(allResults);
+
+  if (req.user.role === "worker") {
+    const ferias = await Ferias.find({ user: req.user.id });
+    res.status(200).json({
+      results: allResults,
+      data: ferias,
+    });
+  } else if (req.user.role === "chefe") {
+    const ferias = await Ferias.find({ role: "worker" });
+    res.status(200).json({
+      results: allResults,
+      data: ferias,
+    });
+  } else if (req.user.role === "RH") {
+    res.status(200).json({
+      results: allResults,
+      data: ferias,
+    });
+  }
 });
 
 // @ desc     Create Ferias
 // @ route    POST /api/v1/ferias
 // @ access   private
 const createFerias = asyncHandler(async (req, res) => {
+  const allResults = await Ferias.countDocuments({});
+
+  /* if (allResults >= 21) {
+    res.status(400);
+    throw new Error("User has reached the maximum number of Ferias allowed");
+  } */
+
   if (
     !req.body.totalFerias ||
     !req.body.ferias ||
     !req.body.tipoFerias ||
-    !req.body.modo
+    !req.body.modo /* ||
+    !req.body.name ||
+    !req.body.worker_number */
   ) {
     res.status(404);
     throw new Error("Please enter input fields");
@@ -27,6 +56,9 @@ const createFerias = asyncHandler(async (req, res) => {
 
   const feria = await Ferias.create({
     user: req.user.id,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    workerNumber: req.user.workerNumber,
     totalFerias: req.body.totalFerias,
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
@@ -86,7 +118,7 @@ const deleteFerias = asyncHandler(async (req, res) => {
   }
 
   await feria.remove();
-  
+
   res.status(200).json({ id: req.params.id });
 });
 

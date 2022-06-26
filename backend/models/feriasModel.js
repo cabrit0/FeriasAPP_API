@@ -3,9 +3,24 @@ const moment = require("moment");
 
 const feriasSchema = mongoose.Schema(
   {
-     user: {
+    user: {
       type: mongoose.Types.ObjectId,
       required: true,
+      ref: "User",
+    },
+
+    firstName: {
+      type: String,
+      ref: "User",
+    },
+
+    workerNumber: {
+      type: Number,
+      ref: "User",
+    },
+
+    lastName: {
+      type: String,
       ref: "User",
     },
 

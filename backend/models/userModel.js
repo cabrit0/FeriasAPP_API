@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Ferias = require("./feriasModel").schema;
 
 const userSchema = mongoose.Schema(
   {
@@ -40,8 +41,8 @@ const userSchema = mongoose.Schema(
     },
 
     ferias: {
-      type: mongoose.Types.ObjectId,
-      ref: "Ferias",
+      type: [mongoose.Types.ObjectId],
+      ref: 'Ferias',
     },
 
     role: {

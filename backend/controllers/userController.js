@@ -3,11 +3,43 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 
 const User = require("../models/userModel");
+const Ferias = require("../models/feriasModel");
+
+// @ desc     Get Users
+// @ route    GET /api/v1/users
+// @ access   private
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  const allResults = await User.countDocuments({});
+
+  const popUsers = await User.find().populate("ferias");
+  console.log(popUsers);
+
+  if (req.user.role === "worker") {
+    res.status(400);
+    throw new Error("User not authorized");
+  } else if (req.user.role === "chefe") {
+    const usersChefia = await User.find({ role: "worker" });
+    res.status(200).json({
+      data: usersChefia,
+    });
+  } else if (req.user.role === "RH") {
+    const usersRH = await User.find().populate("ferias");
+    res.status(200).json({
+      results: allResults,
+      data: usersRH,
+    });
+    //console.log(res.users)
+    //console.log(user.ferias);
+  }
+});
 
 // @desc   Register User
 // @route  POST /api/users
 // @access public
 const registerUser = asyncHandler(async (req, res) => {
+  const popUsers = await User.find().populate("ferias");
+  //console.log(popUsers);
   const {
     firstName,
     lastName,
@@ -61,6 +93,8 @@ const registerUser = asyncHandler(async (req, res) => {
     //token: generateToken(user._id),
   });
 
+  console.log(user.ferias);
+
   if (user) {
     res.status(201).json({
       _id: user.id,
@@ -107,8 +141,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getMe = asyncHandler(async (req, res) => {
-  console.log(req.user);
-  res.status(200).json(req.user);
+  res.status(200).json({ user: req.user });
 });
 
 //generate JWT token
@@ -120,4 +153,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getUsers,
 };
