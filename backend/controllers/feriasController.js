@@ -26,11 +26,11 @@ const createFerias = asyncHandler(async (req, res) => {
   }
 
   const feria = await Ferias.create({
+    user: req.user.id,
     totalFerias: req.body.totalFerias,
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
-    user: req.body.id,
   });
   res.status(200).json(feria);
 });
@@ -62,7 +62,7 @@ const updateFerias = asyncHandler(async (req, res) => {
 // @ route    DELETE /api/v1/ferias/:id
 // @ access   private
 const deleteFerias = asyncHandler(async (req, res) => {
-  const feria = await Ferias.findById(req.params);
+  const feria = await Ferias.findById(req.params.id);
 
   if (!feria) {
     res.status(400);
@@ -86,7 +86,7 @@ const deleteFerias = asyncHandler(async (req, res) => {
   }
 
   await feria.remove();
-
+  
   res.status(200).json({ id: req.params.id });
 });
 
