@@ -12,25 +12,31 @@ const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   const allResults = await User.countDocuments({});
 
-  const popUsers = await User.find().populate("ferias");
-  console.log(popUsers);
+  const ferias = await Ferias.find({ user: req.user._id });
+  console.log(req.user._id);
+
+  /*const ferias = await Ferias.find({});
+  console.log(ferias[2].ferias); */
+  /* console.log(req.user);
+  const popUsers = await Ferias.find({ user: users._id }); */
+
+  //console.log(popUsers);
 
   if (req.user.role === "worker") {
     res.status(400);
     throw new Error("User not authorized");
   } else if (req.user.role === "chefe") {
-    const usersChefia = await User.find({ role: "worker" });
+    const usersChefia = await User.find({ role: "worker" }).populate("ferias");
     res.status(200).json({
       data: usersChefia,
     });
   } else if (req.user.role === "RH") {
     const usersRH = await User.find().populate("ferias");
+    console.log(ferias);
     res.status(200).json({
-      results: allResults,
-      data: usersRH,
+      //results: allResults,
+      data: { results: allResults, data: usersRH },
     });
-    //console.log(res.users)
-    //console.log(user.ferias);
   }
 });
 
@@ -38,7 +44,6 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route  POST /api/users
 // @access public
 const registerUser = asyncHandler(async (req, res) => {
-  const popUsers = await User.find().populate("ferias");
   //console.log(popUsers);
   const {
     firstName,
@@ -49,8 +54,8 @@ const registerUser = asyncHandler(async (req, res) => {
     sectionOfWork,
     chefia,
     role,
-    ferias,
   } = req.body;
+  let { ferias } = req.body;
 
   if (
     !firstName ||
@@ -93,7 +98,8 @@ const registerUser = asyncHandler(async (req, res) => {
     //token: generateToken(user._id),
   });
 
-  console.log(user.ferias);
+   ferias = await Ferias.find({ user: user.id });
+  //console.log(user);
 
   if (user) {
     res.status(201).json({

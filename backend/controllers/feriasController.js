@@ -7,8 +7,8 @@ const User = require("../models/userModel");
 // @ route    GET /api/v1/ferias
 // @ access   private
 const getFerias = asyncHandler(async (req, res) => {
-  const ferias = await Ferias.find();
-  const allResults = await Ferias.countDocuments({});
+  //const ferias = await Ferias.find();
+  const allResults = await Ferias.countDocuments();
   console.log(allResults);
 
   if (req.user.role === "worker") {
@@ -18,16 +18,19 @@ const getFerias = asyncHandler(async (req, res) => {
       data: ferias,
     });
   } else if (req.user.role === "chefe") {
-    const ferias = await Ferias.find({ role: "worker" });
+    const feriasChefia = await Ferias.find({ role: "worker" });
+    const usersChefia = await User.find({ role: "worker" }).populate("ferias");
     res.status(200).json({
       results: allResults,
-      data: ferias,
+      data: feriasChefia,
     });
   } else if (req.user.role === "RH") {
+    const feriasRH = await User.find();
     res.status(200).json({
       results: allResults,
-      data: ferias,
+      data: feriasRH,
     });
+    console.log(feriasRH);
   }
 });
 
@@ -59,11 +62,13 @@ const createFerias = asyncHandler(async (req, res) => {
     firstName: req.user.firstName,
     lastName: req.user.lastName,
     workerNumber: req.user.workerNumber,
+    sectionOfWork: req.user.sectionOfWork,
     totalFerias: req.body.totalFerias,
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
   });
+  console.log(feria.ferias);
   res.status(200).json(feria);
 });
 

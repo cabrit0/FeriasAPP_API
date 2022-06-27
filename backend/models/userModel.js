@@ -40,10 +40,10 @@ const userSchema = mongoose.Schema(
       required: true,
     },
 
-    ferias: {
-      type: [mongoose.Types.ObjectId],
-      ref: 'Ferias',
-    },
+    ferias: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Ferias",
+    }],
 
     role: {
       type: String,

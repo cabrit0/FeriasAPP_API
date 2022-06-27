@@ -14,12 +14,17 @@ const feriasSchema = mongoose.Schema(
       ref: "User",
     },
 
+    lastName: {
+      type: String,
+      ref: "User",
+    },
+
     workerNumber: {
       type: Number,
       ref: "User",
     },
 
-    lastName: {
+    sectionOfWork: {
       type: String,
       ref: "User",
     },
@@ -30,8 +35,8 @@ const feriasSchema = mongoose.Schema(
     },
 
     ferias: {
-      type: Array,
-      default: [Date],
+      type: [String],
+      //default: [Date],
       required: true,
     },
 
