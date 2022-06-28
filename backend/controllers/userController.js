@@ -12,31 +12,38 @@ const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   const allResults = await User.countDocuments({});
 
-  const ferias = await Ferias.find({ user: req.user._id });
+  const ferias = await Ferias.find({ user: req.user });
+  const test = ferias.map((user) => user.ferias);
+  console.log(test + "---");
+
   console.log(req.user._id);
+  //console.log(popFerias)
 
-  /*const ferias = await Ferias.find({});
-  console.log(ferias[2].ferias); */
-  /* console.log(req.user);
-  const popUsers = await Ferias.find({ user: users._id }); */
-
-  //console.log(popUsers);
-
+  //fazer condicao para todos casos recusados
   if (req.user.role === "worker") {
     res.status(400);
     throw new Error("User not authorized");
   } else if (req.user.role === "chefe") {
-    const usersChefia = await User.find({ role: "worker" }).populate("ferias");
+    const usersChefia = await User.find(
+      { role: "worker" },
+      { $push: { userFerias: test } }
+    );
     res.status(200).json({
       data: usersChefia,
     });
   } else if (req.user.role === "RH") {
-    const usersRH = await User.find().populate("ferias");
-    console.log(ferias);
-    res.status(200).json({
-      //results: allResults,
-      data: { results: allResults, data: usersRH },
-    });
+    const usersRH = await User.find({ $push: { userFerias: test } })
+      //.populate("userFerias")
+      .exec((err, result) => {
+        if (err) throw err;
+        //result.push(test);
+        //console.log({ ...result, userFerias: test });
+        res.status(200).json({
+          //results: allResults,
+          data: { results: allResults, data: result },
+        });
+      });
+    //console.log(usersRH);
   }
 });
 
@@ -55,7 +62,8 @@ const registerUser = asyncHandler(async (req, res) => {
     chefia,
     role,
   } = req.body;
-  let { ferias } = req.body;
+  //const ferias = await Ferias.find({ user: req.user.id });
+  //let { ferias } = req.body;
 
   if (
     !firstName ||
@@ -94,12 +102,14 @@ const registerUser = asyncHandler(async (req, res) => {
     sectionOfWork,
     chefia,
     role,
-    ferias,
+    //ferias: test ? tes : null, //
     //token: generateToken(user._id),
   });
 
-   ferias = await Ferias.find({ user: user.id });
-  //console.log(user);
+  //const ferias = await Ferias.find({ user: user.id });
+  //console.log(ferias);
+  const ferias = await Ferias.find({ user: user._id });
+  const test = ferias.map((user) => user.ferias);
 
   if (user) {
     res.status(201).json({
@@ -110,7 +120,7 @@ const registerUser = asyncHandler(async (req, res) => {
       sectionOfWork: user.sectionOfWork,
       chefia: user.chefia,
       role: user.role,
-      ferias: user.ferias,
+      //ferias: user.ferias,
       token: generateToken(user._id),
     });
   } else {
@@ -128,6 +138,9 @@ const loginUser = asyncHandler(async (req, res) => {
   //check fo user email
   const user = await User.findOne({ email });
 
+  const ferias = await Ferias.find({ user: user._id });
+  const test = ferias.map((user) => user.ferias);
+
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
@@ -137,7 +150,7 @@ const loginUser = asyncHandler(async (req, res) => {
       sectionOfWork: user.sectionOfWork,
       chefia: user.chefia,
       role: user.role,
-      ferias: user.ferias,
+      ferias: test,
       token: generateToken(user._id),
     });
   } else {

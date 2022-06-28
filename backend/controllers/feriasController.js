@@ -11,6 +11,7 @@ const getFerias = asyncHandler(async (req, res) => {
   const allResults = await Ferias.countDocuments();
   console.log(allResults);
 
+  //fazer condicao para todos casos recusados
   if (req.user.role === "worker") {
     const ferias = await Ferias.find({ user: req.user.id });
     res.status(200).json({
@@ -25,7 +26,7 @@ const getFerias = asyncHandler(async (req, res) => {
       data: feriasChefia,
     });
   } else if (req.user.role === "RH") {
-    const feriasRH = await User.find();
+    const feriasRH = await Ferias.find();
     res.status(200).json({
       results: allResults,
       data: feriasRH,
@@ -63,7 +64,7 @@ const createFerias = asyncHandler(async (req, res) => {
     lastName: req.user.lastName,
     workerNumber: req.user.workerNumber,
     sectionOfWork: req.user.sectionOfWork,
-    totalFerias: req.body.totalFerias,
+    totalFerias: req.body.totalFerias, //this is not a input, do the logic
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
