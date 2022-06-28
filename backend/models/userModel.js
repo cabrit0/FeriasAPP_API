@@ -40,11 +40,11 @@ const userSchema = mongoose.Schema(
       required: true,
     },
 
-    userFerias: [
-      {
-        type: Array,
-      },
-    ],
+    //userFerias: Array,
+    userFerias: {
+      type: Array,
+      ref: "Ferias",
+    },
 
     role: {
       type: String,

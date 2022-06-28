@@ -7,7 +7,6 @@ const User = require("../models/userModel");
 // @ route    GET /api/v1/ferias
 // @ access   private
 const getFerias = asyncHandler(async (req, res) => {
-  //const ferias = await Ferias.find();
   const allResults = await Ferias.countDocuments();
   console.log(allResults);
 
@@ -20,7 +19,6 @@ const getFerias = asyncHandler(async (req, res) => {
     });
   } else if (req.user.role === "chefe") {
     const feriasChefia = await Ferias.find({ role: "worker" });
-    const usersChefia = await User.find({ role: "worker" }).populate("ferias");
     res.status(200).json({
       results: allResults,
       data: feriasChefia,

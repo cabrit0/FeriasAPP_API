@@ -9,15 +9,12 @@ const Ferias = require("../models/feriasModel");
 // @ route    GET /api/v1/users
 // @ access   private
 const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find();
   const allResults = await User.countDocuments({});
 
   const ferias = await Ferias.find({ user: req.user });
   const test = ferias.map((user) => user.ferias);
-  console.log(test + "---");
 
   console.log(req.user._id);
-  //console.log(popFerias)
 
   //fazer condicao para todos casos recusados
   if (req.user.role === "worker") {
@@ -32,18 +29,18 @@ const getUsers = asyncHandler(async (req, res) => {
       data: usersChefia,
     });
   } else if (req.user.role === "RH") {
-    const usersRH = await User.find({ $push: { userFerias: test } })
-      //.populate("userFerias")
+    const usersRH = await User.find()
+      .populate("userFerias", test)
+      .populate("userFerias")
       .exec((err, result) => {
         if (err) throw err;
         //result.push(test);
-        //console.log({ ...result, userFerias: test });
+        console.log(result);
         res.status(200).json({
           //results: allResults,
           data: { results: allResults, data: result },
         });
       });
-    //console.log(usersRH);
   }
 });
 
@@ -51,7 +48,6 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route  POST /api/users
 // @access public
 const registerUser = asyncHandler(async (req, res) => {
-  //console.log(popUsers);
   const {
     firstName,
     lastName,
@@ -62,8 +58,6 @@ const registerUser = asyncHandler(async (req, res) => {
     chefia,
     role,
   } = req.body;
-  //const ferias = await Ferias.find({ user: req.user.id });
-  //let { ferias } = req.body;
 
   if (
     !firstName ||
@@ -102,12 +96,9 @@ const registerUser = asyncHandler(async (req, res) => {
     sectionOfWork,
     chefia,
     role,
-    //ferias: test ? tes : null, //
     //token: generateToken(user._id),
   });
 
-  //const ferias = await Ferias.find({ user: user.id });
-  //console.log(ferias);
   const ferias = await Ferias.find({ user: user._id });
   const test = ferias.map((user) => user.ferias);
 
@@ -160,7 +151,10 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json({ user: req.user });
+  const ferias = await Ferias.find({ user: req.user._id });
+  const test = ferias.map((user) => user.ferias);
+
+  res.status(200).json({ user: req.user, ferias: test });
 });
 
 //generate JWT token
@@ -168,9 +162,16 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
+const getUserByID = asyncHandler(async (req, res) => {
+  const { workerNumber } = req.body;
+  const user = await User.findOne({ workerNumber });
+  res.status(200).json({ data: { user: user } });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   getMe,
   getUsers,
+  getUserByID,
 };
