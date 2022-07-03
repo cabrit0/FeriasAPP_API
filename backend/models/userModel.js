@@ -3,14 +3,10 @@ const Ferias = require("./feriasModel").schema;
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
+    name: {
       type: String,
       required: true,
-    },
-
-    lastName: {
-      type: String,
-      required: true,
+      required: [true, "Please enter a valid name"],
     },
 
     email: {
@@ -32,6 +28,16 @@ const userSchema = mongoose.Schema(
 
     sectionOfWork: {
       type: String,
+      enum: [
+        "eletrificação",
+        "montagem",
+        "preparação",
+        "desenho",
+        "serralharia",
+        "pneumática",
+        "RH",
+        "CNC",
+      ],
       required: true,
     },
 
@@ -42,12 +48,13 @@ const userSchema = mongoose.Schema(
 
     //userFerias: Array,
     userFerias: {
-      type: Array,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Ferias",
     },
 
     role: {
       type: String,
+      enum: ["trabalhador", "chefia", "RH"],
       required: true,
     },
   },

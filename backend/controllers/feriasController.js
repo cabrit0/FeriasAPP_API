@@ -8,17 +8,22 @@ const User = require("../models/userModel");
 // @ access   private
 const getFerias = asyncHandler(async (req, res) => {
   const allResults = await Ferias.countDocuments();
-  console.log(allResults);
+  //console.log(req.user.role);
 
   //fazer condicao para todos casos recusados
-  if (req.user.role === "worker") {
+  if (req.user.role === "trabalhador") {
     const ferias = await Ferias.find({ user: req.user.id });
     res.status(200).json({
       results: allResults,
       data: ferias,
     });
-  } else if (req.user.role === "chefe") {
-    const feriasChefia = await Ferias.find({ role: "worker" });
+  } else if (req.user.role === "chefia") {
+    const feriasChefia = await Ferias.find({
+      role: "trabalhador",
+      chefia: req.user.name,
+    });
+    //const test2 = await Ferias.find({ chefia: req.user.name });
+    console.log(feriasChefia);
     res.status(200).json({
       results: allResults,
       data: feriasChefia,
@@ -29,7 +34,7 @@ const getFerias = asyncHandler(async (req, res) => {
       results: allResults,
       data: feriasRH,
     });
-    console.log(feriasRH);
+    //console.log(feriasRH);
   }
 });
 
@@ -58,15 +63,16 @@ const createFerias = asyncHandler(async (req, res) => {
 
   const feria = await Ferias.create({
     user: req.user.id,
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
+    name: req.user.name,
     workerNumber: req.user.workerNumber,
     sectionOfWork: req.user.sectionOfWork,
+    role: req.user.role,
+    chefia: req.user.chefia,
     totalFerias: req.body.totalFerias, //this is not a input, do the logic
     ferias: req.body.ferias,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
-  });
+  }); /* .populate('userFerias', 'User'); */
   console.log(feria.ferias);
   res.status(200).json(feria);
 });

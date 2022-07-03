@@ -3,7 +3,9 @@ import "./App.css";
 
 function App() {
   const fetchData = async () => {
-    const response = await fetch("http://localhost:5000/api/v1/users/me");
+    const response = await fetch("http://localhost:5000/api/v1/users/", {
+      method: "POST",
+    });
     const data = await response.json();
     console.log(data);
   };
