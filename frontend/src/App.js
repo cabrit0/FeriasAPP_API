@@ -1,32 +1,20 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ChakraProvider, Box } from '@chakra-ui/react';
+import Home from './pages/Home';
+//import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 function App() {
-  const fetchData = async () => {
-    const response = await fetch("http://localhost:5000/api/v1/users/", {
-      method: "POST",
-    });
-    const data = await response.json();
-    console.log(data);
-  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={fetchData}>click</button>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Box width={'100%'} height={'100vh'} p={8} bgColor={'#191B18'} >
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Router>
+      </Box>
+    </ChakraProvider>
   );
 }
 
