@@ -3,22 +3,23 @@ import Header from '../components/Header';
 import Dashboard from '../components/Dashboard';
 import Footer from '../components/Footer';
 
-import { Box, Center } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 
 const Home = () => {
   return (
-    <Box>
-      <Center p={4}>
+    <Grid h="100%" columns="1fr" templateRows="1fr 3fr 1fr" gap={5}>
+      <GridItem w="100%" h="100%">
         <Header />
-      </Center>
-      <Center p={4}>
+      </GridItem>
+      <GridItem w="100%" h="100%">
         <Dashboard />
-      </Center>
-      <Center p={4}>
+      </GridItem>
+      <GridItem w="100%" h="100%" paddingTop={10}>
         <Footer />
-      </Center>
-    </Box>
+      </GridItem>
+    </Grid>
   );
 };
 
 export default Home;
+

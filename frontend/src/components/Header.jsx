@@ -10,7 +10,7 @@ const Header = () => {
       ('00' + date.getDate()).slice(-2) +
       '/' +
       date.getFullYear() +
-      `\n-\n` +
+      `<br>` +
       ('00' + date.getHours()).slice(-2) +
       ':' +
       ('00' + date.getMinutes()).slice(-2) +
@@ -29,7 +29,7 @@ const Header = () => {
 
   return (
     <Center>
-      <Box p={5} borderRadius={'lg'} w={'80vw'} bgColor={'#21AB4d'}>
+      <Box p={2} borderRadius={'lg'} w={'80vw'} bgColor={'#21AB4d'}>
         <Text
           as="h1"
           fontSize={'4xl'}
