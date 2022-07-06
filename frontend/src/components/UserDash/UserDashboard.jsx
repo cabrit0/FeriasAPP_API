@@ -1,4 +1,5 @@
 import React from 'react';
+import CalendarComponent from '../CalendarComponent';
 import Nav from '../NavH';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
@@ -17,7 +18,7 @@ const UserDashboard = () => {
           <GridItem rowSpan={1} p={4}>
             <Nav />
           </GridItem>
-          <GridItem rowSpan={4} bg="papayawhip" />
+          <GridItem rowSpan={4} bg="papayawhip" ><CalendarComponent/></GridItem>
         </Grid>
       </Box>
     </Center>
