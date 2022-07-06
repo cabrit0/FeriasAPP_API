@@ -41,7 +41,7 @@ const Dashboard = () => {
     try {
       const response = await UserFinder.post('/login', { email, password });
       const role = response.data.role;
-      console.log(role);
+      //console.log(role);
       userCtx.setUserInfo(response.data);
       if (role === 'trabalhador') navigate(`/user/trabalhador`);
       if (role === 'chefia') navigate(`/user/chefia`);

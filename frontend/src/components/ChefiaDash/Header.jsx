@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 
 import { Box, Center, Flex, Spacer, Text } from '@chakra-ui/react';
@@ -17,12 +17,25 @@ const Header = () => {
       `\n-\n` +
       ('00' + date.getHours()).slice(-2) +
       ':' +
-      ('00' + date.getMinutes()).slice(-2);
+      ('00' + date.getMinutes()).slice(-2) +
+      ':' +
+      ('00' + date.getSeconds()).slice(-2);;
     return dateStr;
   };
+
+    const [actualDate, setActualDate] = useState(getCurrentDate());
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setActualDate(getCurrentDate());
+      }, 1000);
+      return () => clearTimeout(timer);
+    });
+
+
   return (
     <Center>
-      <Box p={2} borderRadius={'lg'} w={'80vw'} bgColor={'#21AB4d'}>
+      <Box p={2} borderRadius={'lg'} w={'100%'} bgColor={'#21AB4d'}>
         <Flex>
           <Box>
             <Text
@@ -35,7 +48,7 @@ const Header = () => {
               FERIAS APP
             </Text>
             <Text as="h1" align={'center'} color={'#EFFFF4'}>
-              {getCurrentDate()}
+              {actualDate}
             </Text>
           </Box>
           <Spacer />

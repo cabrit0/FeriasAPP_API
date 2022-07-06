@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 import Nav from '../NavH';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
 
-const UserDashboard = () => {
+const ChefiaDashboard = () => {
   return (
     <Center>
       <Box
@@ -22,6 +22,6 @@ const UserDashboard = () => {
       </Box>
     </Center>
   );
-};
+}
 
-export default UserDashboard;
+export default ChefiaDashboard

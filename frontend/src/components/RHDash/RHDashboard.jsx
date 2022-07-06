@@ -3,7 +3,7 @@ import Nav from '../NavH';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
 
-const UserDashboard = () => {
+const RHDashboard = () => {
   return (
     <Center>
       <Box
@@ -24,4 +24,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default RHDashboard;
