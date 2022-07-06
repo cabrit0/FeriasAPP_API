@@ -13,7 +13,7 @@ function App() {
   return (
     <ChakraProvider>
       <UserContextProvider>
-        <Box width={'100%'} height={'100vh'} p={8} bgColor={'#191B18'}>
+        <Box width={'100%'} height={'100vh'} p={6} bgColor={'#191B18'}>
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />

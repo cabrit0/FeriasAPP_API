@@ -22,9 +22,8 @@ const Header = () => {
   };
   return (
     <Center>
-      <Box p={3} borderRadius={'lg'} h={'100%'} w={'100%'} bgColor={'#21AB4d'}>
+      <Box p={2} borderRadius={'lg'} w={'80vw'} bgColor={'#21AB4d'}>
         <Flex>
-          <Spacer />
           <Box>
             <Text
               as="h1"
@@ -56,7 +55,6 @@ const Header = () => {
               </Text>
             </Center>
           </Box>
-          <Spacer />
         </Flex>
       </Box>
     </Center>

@@ -10,7 +10,7 @@ const Header = () => {
       ('00' + date.getDate()).slice(-2) +
       '/' +
       date.getFullYear() +
-      `<br>` +
+      `\n` +
       ('00' + date.getHours()).slice(-2) +
       ':' +
       ('00' + date.getMinutes()).slice(-2) +
