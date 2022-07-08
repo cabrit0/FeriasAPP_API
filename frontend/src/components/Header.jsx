@@ -24,7 +24,9 @@ const Header = () => {
     const timer = setTimeout(() => {
       setActualDate(getCurrentDate());
     }, 1000);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   });
 
   return (

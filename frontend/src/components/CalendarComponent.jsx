@@ -7,7 +7,7 @@ import { Box } from '@chakra-ui/react';
 const CalendarComponent = () => {
   return (
     <Box>
-      <Calendar showWeekNumbers="true" selectRange="true" />
+      <Calendar showWeekNumbers={true} selectRange={true} />
     </Box>
   );
 };

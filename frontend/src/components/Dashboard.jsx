@@ -1,7 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import UserFinder from '../api/UserFinder';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { WeatherContext } from '../context/WeatherContext';
+
 
 import {
   Box,
@@ -67,6 +70,25 @@ const Dashboard = () => {
       //isAdmin = false;
     }
   };
+
+  const { setWeatherInfo } = useContext(WeatherContext);
+
+  const getWeather = async () => {
+    try {
+      const weatherResponse = await axios.get(
+        'http://api.weatherapi.com/v1/current.json?key=dea616693be34cf6983182956220707&q=castelo branco&aqi=no'
+      );
+      setWeatherInfo(weatherResponse.data.current);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getWeather();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //console.log(weatherInfo);
 
   return (
     <Center>
