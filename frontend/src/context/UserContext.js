@@ -6,6 +6,7 @@ export const UserContextProvider = props => {
   const [userInfo, setUserInfo] = useState([]);
   const [isCreatingFalta, setIsCreatingFalta] = useState(false);
   const [isVerFaltas, setIsVerFaltas] = useState(false);
+  const [isVerInformacao, setIsVerInformacao] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const showUser = user => setUserInfo([...userInfo, user]);
 
@@ -18,6 +19,8 @@ export const UserContextProvider = props => {
         setIsCreatingFalta,
         isVerFaltas,
         setIsVerFaltas,
+        isVerInformacao,
+        setIsVerInformacao,
       }}
     >
       {props.children}

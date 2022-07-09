@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SubHeader from '../SubHeader';
 import CalendarComponent from '../CalendarComponent';
 import Menu from '../Menu';
+import FaltaDashBoard from '../FaltaDash';
+import VerFaltasDash from '../VerFaltasDash';
+import Informacao from '../Informacao';
+
+import { UserContext } from '../../context/UserContext';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
 
 const RHDashboard = () => {
+  const userCtx = useContext(UserContext);
+
   return (
     <Center>
       <Box
@@ -27,9 +34,26 @@ const RHDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                <GridItem colSpan={1} px={4}>
-                  <CalendarComponent />
-                </GridItem>
+                {!userCtx.isVerFaltas && !userCtx.isVerInformacao && (
+                  <GridItem colSpan={1} px={3}>
+                    <CalendarComponent />
+                  </GridItem>
+                )}
+                {userCtx.isCreatingFalta && (
+                  <GridItem colSpan={1} px={3}>
+                    <FaltaDashBoard />
+                  </GridItem>
+                )}
+                {userCtx.isVerFaltas && (
+                  <GridItem>
+                    <VerFaltasDash />
+                  </GridItem>
+                )}
+                {userCtx.isVerInformacao && (
+                  <GridItem>
+                    <Informacao />
+                  </GridItem>
+                )}
               </Center>
             </Grid>
           </GridItem>

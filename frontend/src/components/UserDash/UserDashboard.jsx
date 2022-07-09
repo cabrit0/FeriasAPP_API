@@ -4,6 +4,7 @@ import SubHeader from '../SubHeader';
 import Menu from '../Menu';
 import FaltaDashBoard from '../FaltaDash';
 import VerFaltasDash from '../VerFaltasDash';
+import Informacao from '../Informacao';
 
 import { UserContext } from '../../context/UserContext';
 
@@ -33,7 +34,7 @@ const UserDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                {!userCtx.isVerFaltas && (
+                {(!userCtx.isVerFaltas && !userCtx.isVerInformacao) && (
                   <GridItem colSpan={1} px={3}>
                     <CalendarComponent />
                   </GridItem>
@@ -46,6 +47,11 @@ const UserDashboard = () => {
                 {userCtx.isVerFaltas && (
                   <GridItem>
                     <VerFaltasDash />
+                  </GridItem>
+                )}
+                {userCtx.isVerInformacao && (
+                  <GridItem>
+                    <Informacao />
                   </GridItem>
                 )}
               </Center>

@@ -1,24 +1,39 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, List, ListItem } from '@chakra-ui/react';
 
 //fazer roteamento ReactRouter
 const Menu = () => {
+  const navigate = useNavigate();
+
   const userCtx = useContext(UserContext);
   const role = userCtx.userInfo.role;
   console.log(userCtx);
 
   const criarFalta = () => {
     userCtx.setIsVerFaltas(false);
+    userCtx.setIsVerInformacao(false);
     userCtx.setIsCreatingFalta(true);
-    console.log(userCtx);
   };
 
-  const verFaltas = () =>{
-    userCtx.setIsCreatingFalta(false)
-    userCtx.setIsVerFaltas(true)
-  }
+  const verFaltas = () => {
+    userCtx.setIsCreatingFalta(false);
+    userCtx.setIsVerInformacao(false);
+    userCtx.setIsVerFaltas(true);
+  };
+
+  const VerInformacao = () => {
+    userCtx.setIsCreatingFalta(false);
+    userCtx.setIsVerFaltas(false);
+    userCtx.setIsVerInformacao(true);
+  };
+
+  const logOut = () => {
+    userCtx.setUserInfo([]);
+    navigate(`/`);
+  };
 
   return (
     <Box w="300px">
@@ -39,13 +54,19 @@ const Menu = () => {
           </ListItem>
         )}
         <ListItem p={3}>
-          <Box as="button" onClick={verFaltas}>Ver Minhas Faltas</Box>
+          <Box as="button" onClick={verFaltas}>
+            Ver Minhas Faltas
+          </Box>
         </ListItem>
         <ListItem p={3}>
-          <Box as="button">Informações</Box>
+          <Box as="button" onClick={VerInformacao}>
+            Informações
+          </Box>
         </ListItem>
         <ListItem p={3}>
-          <Box as="button">Logout</Box>
+          <Box as="button" onClick={logOut}>
+            Logout
+          </Box>
         </ListItem>
       </List>
     </Box>

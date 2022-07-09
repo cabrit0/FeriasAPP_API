@@ -23,7 +23,7 @@ const VerFaltasDash = () => {
     <Box>
       <TableContainer
         height="400px "
-        width="680px"
+        width="800px"
         color={'#aeaeae'}
         bg="#191B18"
         borderRadius="lg"
@@ -33,26 +33,26 @@ const VerFaltasDash = () => {
           <TableCaption>AS MINHAS FALTAS ATÉ AGORA</TableCaption>
           <Thead>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Th>Dia(as)</Th>
+              <Th>Horas</Th>
+              <Th>Total</Th>
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
+              <Td>12/05/2022</Td>
+              <Td>08:00 - 12:30</Td>
+              <Td> 4:30h</Td>
             </Tr>
             <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
+              <Td>13/05/2022</Td>
+              <Td>08:00 - 12:30</Td>
+              <Td> 4:30h </Td>
             </Tr>
             <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
+              <Td>14/05/2022</Td>
+              <Td>08:00 - 12:30</Td>
+              <Td> 4:30h</Td>
             </Tr>
           </Tbody>
         </Table>
