@@ -36,13 +36,20 @@ const feriasSchema = mongoose.Schema(
 
     totalFerias: {
       type: Number,
-      required: true,
+      //required: true,
     },
 
     ferias: {
-      type: Array,
+      type: Object,
+      dia: {
+        type: Array,
+        required: true,
+      },
+      hora: {
+        type: Array,
+        required: true,
+      },
       //default: [Date],
-      required: true,
     },
 
     tipoFerias: {

@@ -30,7 +30,7 @@ const getUsers = asyncHandler(async (req, res) => {
     const usersRH = await User.find();
     console.log(usersRH);
     res.status(200).json({
-      data: usersRH,
+      data: usersRH
     });
   }
 });
@@ -119,6 +119,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const ferias = await Ferias.find({ user: user._id });
   const test = ferias.map((user) => user.ferias);
+  const test2 = ferias.map((user) => user.horas);
+  console.log(test2);
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
@@ -129,7 +131,7 @@ const loginUser = asyncHandler(async (req, res) => {
       sectionOfWork: user.sectionOfWork,
       chefia: user.chefia,
       role: user.role,
-      ferias: test,
+      ferias: {...test},
       token: generateToken(user._id),
     });
   } else {

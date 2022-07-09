@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CalendarComponent from '../CalendarComponent';
 import SubHeader from '../SubHeader';
 import Menu from '../Menu';
+import FaltaDashBoard from '../FaltaDash';
+import VerFaltasDash from '../VerFaltasDash';
+
+import { UserContext } from '../../context/UserContext';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
 
 const UserDashboard = () => {
+  const userCtx = useContext(UserContext);
 
   return (
-    <Center>
+    <Box verticalAlign={'top'}>
       <Box
         p={3}
         borderRadius={'lg'}
@@ -16,11 +21,11 @@ const UserDashboard = () => {
         w={'100%'}
         bgColor={'#21AB4d'}
       >
-        <Grid h="100%" templateRows="1fr 4fr" templateColumns="1fr" gap={2}>
+        <Grid h="100%" templateRows="1fr 4fr" templateColumns="1fr" gap={1}>
           <GridItem rowSpan={1} p={4}>
             <SubHeader />
           </GridItem>
-          <GridItem rowSpan={4} p={4}>
+          <GridItem rowSpan={4} p={3}>
             <Grid h="100%" templateColumns="1fr 2fr" gap={2}>
               <GridItem colSpan={1} p={3}>
                 <Center>
@@ -28,15 +33,27 @@ const UserDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                <GridItem colSpan={1} px={4}>
-                  <CalendarComponent />
-                </GridItem>
+                {!userCtx.isVerFaltas && (
+                  <GridItem colSpan={1} px={3}>
+                    <CalendarComponent />
+                  </GridItem>
+                )}
+                {userCtx.isCreatingFalta && (
+                  <GridItem colSpan={1} px={3}>
+                    <FaltaDashBoard />
+                  </GridItem>
+                )}
+                {userCtx.isVerFaltas && (
+                  <GridItem>
+                    <VerFaltasDash />
+                  </GridItem>
+                )}
               </Center>
             </Grid>
           </GridItem>
         </Grid>
       </Box>
-    </Center>
+    </Box>
   );
 };
 
