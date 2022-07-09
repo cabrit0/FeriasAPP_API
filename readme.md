@@ -1,6 +1,7 @@
-## FeriasAPP
+## FeriasAPP - fullstack
 
 ## api for feriasApp
+## frontend for feriasApp
 
 test api for application develop for a professional project
 
