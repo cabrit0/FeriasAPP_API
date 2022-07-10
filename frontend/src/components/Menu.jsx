@@ -15,19 +15,29 @@ const Menu = () => {
   const criarFalta = () => {
     userCtx.setIsVerFaltas(false);
     userCtx.setIsVerInformacao(false);
+    userCtx.setIsProcurarUser(false);
     userCtx.setIsCreatingFalta(true);
   };
 
   const verFaltas = () => {
     userCtx.setIsCreatingFalta(false);
     userCtx.setIsVerInformacao(false);
+    userCtx.setIsProcurarUser(false);
     userCtx.setIsVerFaltas(true);
   };
 
   const VerInformacao = () => {
     userCtx.setIsCreatingFalta(false);
     userCtx.setIsVerFaltas(false);
+    userCtx.setIsProcurarUser(false);
     userCtx.setIsVerInformacao(true);
+  };
+
+  const procurarUser = () => {
+    userCtx.setIsCreatingFalta(false);
+    userCtx.setIsVerFaltas(false);
+    userCtx.setIsVerInformacao(false);
+    userCtx.setIsProcurarUser(true);
   };
 
   const logOut = () => {
@@ -50,7 +60,9 @@ const Menu = () => {
         )}
         {(role === 'RH' || role === 'chefia') && (
           <ListItem p={3}>
-            <Box as="button">Procurar User</Box>
+            <Box as="button" onClick={procurarUser}>
+              Procurar User
+            </Box>
           </ListItem>
         )}
         <ListItem p={3}>

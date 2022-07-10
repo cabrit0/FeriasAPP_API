@@ -5,6 +5,8 @@ import Menu from '../Menu';
 import FaltaDashBoard from '../FaltaDash';
 import VerFaltasDash from '../VerFaltasDash';
 import Informacao from '../Informacao';
+import ProcurarUserDash from '../ProcurarUserDash';
+
 import { UserContext } from '../../context/UserContext';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
@@ -33,7 +35,7 @@ const ChefiaDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                {!userCtx.isVerFaltas && !userCtx.isVerInformacao && (
+                {!userCtx.isVerFaltas && !userCtx.isVerInformacao && !userCtx.isProcurarUser && (
                   <GridItem colSpan={1} px={3}>
                     <CalendarComponent />
                   </GridItem>
@@ -51,6 +53,11 @@ const ChefiaDashboard = () => {
                 {userCtx.isVerInformacao && (
                   <GridItem>
                     <Informacao />
+                  </GridItem>
+                )}
+                {userCtx.isProcurarUser && (
+                  <GridItem>
+                    <ProcurarUserDash />
                   </GridItem>
                 )}
               </Center>

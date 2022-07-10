@@ -54,14 +54,13 @@ const createFerias = asyncHandler(async (req, res) => {
     !req.body.ferias ||
     !req.body.horas ||
     !req.body.tipoFerias ||
-    !req.body.modo /* ||
-    !req.body.name ||
-    !req.body.worker_number */
+    !req.body.modo
   ) {
     res.status(404);
     throw new Error("Please enter input fields");
   }
-  //let totalFerias = 21
+  
+  let totalFerias = 21
   const feria = await Ferias.create({
     user: req.user.id,
     name: req.user.name,
@@ -69,13 +68,14 @@ const createFerias = asyncHandler(async (req, res) => {
     sectionOfWork: req.user.sectionOfWork,
     role: req.user.role,
     chefia: req.user.chefia,
-    //totalFerias: totalFerias - 1, //this is not a input, do the logic
+    totalFerias: totalFerias, //this is not a input, do the logic
     ferias: { dias: req.body.dias, horas: req.body.horas },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
   }); /* .populate('userFerias', 'User'); */
   console.log(feria.horas);
   res.status(200).json(feria);
+  totalFerias = totalFerias - 1;
 });
 
 // @ desc     Update Ferias

@@ -112,7 +112,7 @@ function Informacao() {
               justify="center"
               color={'#EFFFF4'}
             >
-              Nº trabalhador: :
+              Nº trabalhador :
             </Text>
             <Text
               as="h3"
@@ -132,7 +132,7 @@ function Informacao() {
               justify="center"
               color={'#EFFFF4'}
             >
-              Secção de trabalho: :
+              Secção de trabalho :
             </Text>
             <Text
               as="h3"
