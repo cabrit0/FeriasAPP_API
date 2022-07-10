@@ -5,7 +5,7 @@ import { Box, Center, Flex, Spacer, Text } from '@chakra-ui/react';
 
 const Header = () => {
   const { userInfo } = useContext(UserContext);
-  console.log(userInfo);
+  //console.log(userInfo);
   const getCurrentDate = () => {
     let date = new Date();
     let dateStr =

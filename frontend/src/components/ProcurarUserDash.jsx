@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../context/UserContext';
+import UserFinder from '../api/UserFinder';
 
 import {
   Box,
@@ -14,19 +16,45 @@ import {
 } from '@chakra-ui/react';
 
 const ProcurarUserDash = () => {
+  const userCtx = useContext(UserContext);
+  const [userList, setUserList] = useState([]);
 
-    const sairProcurarUser = () => {
+  const getUsersData = async () => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${userCtx.userInfo.token}` },
+      };
 
+      const response = await UserFinder.get('/', config);
+      const data = response.data.data;
+      setUserList(Object.entries(data));
+    } catch (error) {
+      console.log(error);
     }
+  };
+  console.log(userList);
+
+  useEffect(() => {
+    getUsersData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const procurarUserRender = userList.map(users => {
+    return (
+      <Tr key={users}>
+        <Td>{users[1].name}</Td>
+        <Td>{users[1].sectionOfWork}</Td>
+        <Td>{users[1].role}</Td>
+        <Td>{users[1].workerNumber}</Td>
+      </Tr>
+    );
+  });
+
+  const sairProcurarUser = () => {
+    userCtx.setIsProcurarUser(false);
+  };
   return (
-    <Box
-      height="400px "
-      width="800px"
-      color={'#aeaeae'}
-      bg="#191B18"
-      borderRadius="lg"
-      p={5}
-    >
+    <Box>
       <TableContainer
         height="400px "
         width="800px"
@@ -39,32 +67,16 @@ const ProcurarUserDash = () => {
           <TableCaption>Meus Utilizadores</TableCaption>
           <Thead>
             <Tr>
-              <Th>Dia(as)</Th>
-              <Th>Horas</Th>
-              <Th>Total</Th>
+              <Th>Nome</Th>
+              <Th>Secção</Th>
+              <Th>Colaborador</Th>
+              <Th>Nº Trabalhador</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>12/05/2022</Td>
-              <Td>08:00 - 12:30</Td>
-              <Td> 4:30h</Td>
-            </Tr>
-            <Tr>
-              <Td>13/05/2022</Td>
-              <Td>08:00 - 12:30</Td>
-              <Td> 4:30h </Td>
-            </Tr>
-            <Tr>
-              <Td>14/05/2022</Td>
-              <Td>08:00 - 12:30</Td>
-              <Td> 4:30h</Td>
-            </Tr>
+            {procurarUserRender}
           </Tbody>
         </Table>
-        <Button align="rigth" m={1}>
-          Seguinte
-        </Button>
         <Button onClick={sairProcurarUser} align="rigth" m={1}>
           Sair
         </Button>

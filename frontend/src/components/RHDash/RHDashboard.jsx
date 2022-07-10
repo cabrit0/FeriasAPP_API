@@ -5,6 +5,7 @@ import Menu from '../Menu';
 import FaltaDashBoard from '../FaltaDash';
 import VerFaltasDash from '../VerFaltasDash';
 import Informacao from '../Informacao';
+import ProcurarUserDash from '../ProcurarUserDash';
 
 import { UserContext } from '../../context/UserContext';
 
@@ -34,11 +35,13 @@ const RHDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                {!userCtx.isVerFaltas && !userCtx.isVerInformacao && (
-                  <GridItem colSpan={1} px={3}>
-                    <CalendarComponent />
-                  </GridItem>
-                )}
+                {!userCtx.isVerFaltas &&
+                  !userCtx.isVerInformacao &&
+                  !userCtx.isProcurarUser && (
+                    <GridItem colSpan={1} px={3}>
+                      <CalendarComponent />
+                    </GridItem>
+                  )}
                 {userCtx.isCreatingFalta && (
                   <GridItem colSpan={1} px={3}>
                     <FaltaDashBoard />
@@ -52,6 +55,11 @@ const RHDashboard = () => {
                 {userCtx.isVerInformacao && (
                   <GridItem>
                     <Informacao />
+                  </GridItem>
+                )}
+                {userCtx.isProcurarUser && (
+                  <GridItem>
+                    <ProcurarUserDash />
                   </GridItem>
                 )}
               </Center>

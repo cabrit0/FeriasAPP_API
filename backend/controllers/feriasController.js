@@ -59,8 +59,8 @@ const createFerias = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Please enter input fields");
   }
-  
-  let totalFerias = 21
+
+  let totalFerias = 21;
   const feria = await Ferias.create({
     user: req.user.id,
     name: req.user.name,
@@ -69,7 +69,11 @@ const createFerias = asyncHandler(async (req, res) => {
     role: req.user.role,
     chefia: req.user.chefia,
     totalFerias: totalFerias, //this is not a input, do the logic
-    ferias: { dias: req.body.dias, horas: req.body.horas },
+    ferias: {
+      dias: [req.body.dias],
+      horas: [req.body.horas],
+      totalHorasFerias: req.body.totalHorasFerias,
+    },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
   }); /* .populate('userFerias', 'User'); */
