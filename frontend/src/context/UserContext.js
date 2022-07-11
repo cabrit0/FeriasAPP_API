@@ -4,10 +4,12 @@ export const UserContext = createContext();
 
 export const UserContextProvider = props => {
   const [userInfo, setUserInfo] = useState([]);
+  const [feriasInfo, setFeriasInfo] = useState([]);
   const [feriasCalendar, setFeriasCalendar] = useState(new Date());
   const [ferias, setFerias] = useState('');
   const [horasDiff, setHorasDiff] = useState('');
   const [isCreatingFalta, setIsCreatingFalta] = useState(false);
+  const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [isVerFaltas, setIsVerFaltas] = useState(false);
   const [isVerInformacao, setIsVerInformacao] = useState(false);
   const [isProcurarUser, setIsProcurarUser] = useState(false);
@@ -19,8 +21,12 @@ export const UserContextProvider = props => {
       value={{
         userInfo,
         setUserInfo,
+        feriasInfo,
+        setFeriasInfo,
         isCreatingFalta,
         setIsCreatingFalta,
+        isCreatingUser,
+        setIsCreatingUser,
         isVerFaltas,
         setIsVerFaltas,
         isVerInformacao,

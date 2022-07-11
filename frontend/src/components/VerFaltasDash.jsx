@@ -17,9 +17,8 @@ import {
 const VerFaltasDash = () => {
   const userCtx = useContext(UserContext);
   const feriasCtx = Object.entries(userCtx.userInfo.ferias);
-  //console.log(feriasCtx[0][1]);
-
   //console.log(feriasCtx);
+
   const feriasUserRender = feriasCtx.map(ferias => {
     //console.log(ferias);
     function convertDate(inputFormat) {
@@ -37,9 +36,9 @@ const VerFaltasDash = () => {
     return (
       <Tr key={ferias}>
         <Td>{first + ' até ' + second}</Td>
-        <Td>
-          {`${ferias[1].horas[0][0]}h até ${ferias[1].horas[0][1]}h`}
-        </Td>
+        <Td>{`${ferias[1].horas[0][0]}h até ${ferias[1].horas[0][1]}h`}</Td>
+        <Td>{ferias[1].modo}</Td>
+        <Td>{ferias[1].tipoFerias}</Td>
         <Td>{ferias[1].totalHorasFerias}h</Td>
       </Tr>
     );
@@ -52,7 +51,7 @@ const VerFaltasDash = () => {
     <Box>
       <TableContainer
         height="400px "
-        width="800px"
+        width="880px"
         color={'#aeaeae'}
         bg="#191B18"
         borderRadius="lg"
@@ -65,6 +64,8 @@ const VerFaltasDash = () => {
             <Tr>
               <Th>Dias</Th>
               <Th>Horas</Th>
+              <Th>Modo</Th>
+              <Th>Tipo</Th>
               <Th>Total</Th>
             </Tr>
           </Thead>

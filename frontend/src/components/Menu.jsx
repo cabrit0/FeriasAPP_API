@@ -4,15 +4,23 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, List, ListItem } from '@chakra-ui/react';
 
-//fazer roteamento ReactRouter
 const Menu = () => {
   const navigate = useNavigate();
 
   const userCtx = useContext(UserContext);
   const role = userCtx.userInfo.role;
-  console.log(userCtx);
+  //console.log(userCtx);
+
+  const criarUser = () => {
+    userCtx.setIsVerFaltas(false);
+    userCtx.setIsVerInformacao(false);
+    userCtx.setIsProcurarUser(false);
+    userCtx.setIsCreatingFalta(false);
+    userCtx.setIsCreatingUser(true);
+  };
 
   const criarFalta = () => {
+    userCtx.setIsCreatingUser(false);
     userCtx.setIsVerFaltas(false);
     userCtx.setIsVerInformacao(false);
     userCtx.setIsProcurarUser(false);
@@ -23,6 +31,7 @@ const Menu = () => {
     userCtx.setIsCreatingFalta(false);
     userCtx.setIsVerInformacao(false);
     userCtx.setIsProcurarUser(false);
+    userCtx.setIsCreatingUser(false);
     userCtx.setIsVerFaltas(true);
   };
 
@@ -30,6 +39,7 @@ const Menu = () => {
     userCtx.setIsCreatingFalta(false);
     userCtx.setIsVerFaltas(false);
     userCtx.setIsProcurarUser(false);
+    userCtx.setIsCreatingUser(false);
     userCtx.setIsVerInformacao(true);
   };
 
@@ -37,6 +47,7 @@ const Menu = () => {
     userCtx.setIsCreatingFalta(false);
     userCtx.setIsVerFaltas(false);
     userCtx.setIsVerInformacao(false);
+    userCtx.setIsCreatingUser(false);
     userCtx.setIsProcurarUser(true);
   };
 
@@ -55,7 +66,9 @@ const Menu = () => {
         </ListItem>
         {role === 'RH' && (
           <ListItem p={3}>
-            <Box as="button">Criar User</Box>
+            <Box as="button" onClick={criarUser}>
+              Criar User
+            </Box>
           </ListItem>
         )}
         {(role === 'RH' || role === 'chefia') && (

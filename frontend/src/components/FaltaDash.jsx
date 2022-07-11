@@ -46,7 +46,7 @@ const FaltaDash = () => {
         dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
         totalHorasFerias:
           userCtx.ferias *
-          (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff),
+          (userCtx.horasDiff >= 9 ? (userCtx.horasDiff - 1) : userCtx.horasDiff),
         tipoFerias: tipoFerias,
         modo: modoFerias,
       };

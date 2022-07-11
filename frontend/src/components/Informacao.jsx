@@ -22,7 +22,7 @@ function Informacao() {
   return (
     <Box
       height="400px "
-      width="800px"
+      width="880px"
       color={'#aeaeae'}
       bg="#191B18"
       borderRadius="lg"

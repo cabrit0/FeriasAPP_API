@@ -10,6 +10,7 @@ import ProcurarUserDash from '../ProcurarUserDash';
 import { UserContext } from '../../context/UserContext';
 
 import { Box, Grid, GridItem, Center } from '@chakra-ui/react';
+import CriarUser from './CriarUser';
 
 const RHDashboard = () => {
   const userCtx = useContext(UserContext);
@@ -35,13 +36,19 @@ const RHDashboard = () => {
                 </Center>
               </GridItem>
               <Center>
-                {!userCtx.isVerFaltas &&
+                {!userCtx.isCreatingUser &&
+                  !userCtx.isVerFaltas &&
                   !userCtx.isVerInformacao &&
                   !userCtx.isProcurarUser && (
                     <GridItem colSpan={1} px={3}>
                       <CalendarComponent />
                     </GridItem>
                   )}
+                {userCtx.isCreatingUser && (
+                  <GridItem colSpan={1} px={3}>
+                    <CriarUser />
+                  </GridItem>
+                )}
                 {userCtx.isCreatingFalta && (
                   <GridItem colSpan={1} px={3}>
                     <FaltaDashBoard />

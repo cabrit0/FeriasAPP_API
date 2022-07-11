@@ -49,9 +49,15 @@ const feriasSchema = mongoose.Schema(
         type: Array,
         required: true,
       },
-      totalHorasFerias:{
+      totalHorasFerias: {
         type: Number,
-      }
+      },
+      tipoFerias: {
+        type: String,
+      },
+      modo: {
+        type: String,
+      },
       //default: [Date],
     },
 

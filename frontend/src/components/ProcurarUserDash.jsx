@@ -57,10 +57,11 @@ const ProcurarUserDash = () => {
     <Box>
       <TableContainer
         height="400px "
-        width="800px"
+        width="880px"
         color={'#aeaeae'}
         bg="#191B18"
         borderRadius="lg"
+        overflowY="scroll"
         p={5}
       >
         <Table variant="simple">
@@ -73,9 +74,7 @@ const ProcurarUserDash = () => {
               <Th>Nº Trabalhador</Th>
             </Tr>
           </Thead>
-          <Tbody>
-            {procurarUserRender}
-          </Tbody>
+          <Tbody>{procurarUserRender}</Tbody>
         </Table>
         <Button onClick={sairProcurarUser} align="rigth" m={1}>
           Sair

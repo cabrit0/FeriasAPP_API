@@ -29,12 +29,13 @@ const userSchema = mongoose.Schema(
     sectionOfWork: {
       type: String,
       enum: [
-        "eletrificação",
+        "eletrificacao",
         "montagem",
-        "preparação",
+        "preparacao",
         "desenho",
         "serralharia",
-        "pneumática",
+        "fresador",
+        "pneumatica",
         "RH",
         "CNC",
       ],

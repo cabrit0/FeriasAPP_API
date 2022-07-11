@@ -73,6 +73,8 @@ const createFerias = asyncHandler(async (req, res) => {
       dias: [req.body.dias],
       horas: [req.body.horas],
       totalHorasFerias: req.body.totalHorasFerias,
+      tipoFerias: req.body.tipoFerias,
+      modo: req.body.modo,
     },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
