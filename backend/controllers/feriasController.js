@@ -48,7 +48,6 @@ const createFerias = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("User has reached the maximum number of Ferias allowed");
   } */
-
   if (
     //!req.body.totalFerias ||
     !req.body.ferias ||
@@ -75,6 +74,10 @@ const createFerias = asyncHandler(async (req, res) => {
       totalHorasFerias: req.body.totalHorasFerias,
       tipoFerias: req.body.tipoFerias,
       modo: req.body.modo,
+      justificacao: {
+        imageName: req.body.imageName,
+        image: req.file,
+      },
     },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
@@ -82,6 +85,8 @@ const createFerias = asyncHandler(async (req, res) => {
   console.log(feria.horas);
   res.status(200).json(feria);
   totalFerias = totalFerias - 1;
+
+  console.log(req.file);
 });
 
 // @ desc     Update Ferias
