@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const path = require("path");
 const router = express.Router();
 
 const {
@@ -13,19 +14,16 @@ const { protect } = require("../middlewares/authMiddleware");
 
 //UPLOADER WITH MULTER PACKAGE  - MIDDLEWARE
 const fileStorageEngine = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, "./backend/images");
-  },
+  destination: "./backend/images",
   filename: (req, file, callback) => {
-    callback(null, Date.now() + "---" + file.originalname);
+    callback(null, Date.now() + " - " + file.originalname);
   },
 });
-const upload = multer({ storage: fileStorageEngine })/* .single('testImage'); */
+const upload = multer({
+  storage: fileStorageEngine,
+}).single("image"); /* .single('testImage'); */
 
-router
-  .route("/")
-  .get(protect, getFerias)
-  .post(protect, upload.single('image'), createFerias);
+router.route("/").get(protect, getFerias).post(protect, upload, createFerias);
 router.route("/:id").put(protect, updateFerias).delete(protect, deleteFerias);
 
 module.exports = router;

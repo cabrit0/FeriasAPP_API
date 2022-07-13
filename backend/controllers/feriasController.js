@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const fs = require("fs");
 
 const Ferias = require("../models/feriasModel");
 const User = require("../models/userModel");
@@ -75,12 +76,15 @@ const createFerias = asyncHandler(async (req, res) => {
       tipoFerias: req.body.tipoFerias,
       modo: req.body.modo,
       justificacao: {
-        imageName: req.body.imageName,
-        image: req.file,
+        image: {
+          data: req.file,
+          contentType: "image/*",
+        },
       },
     },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
+    //image: req.file,
   }); /* .populate('userFerias', 'User'); */
   console.log(feria.horas);
   res.status(200).json(feria);

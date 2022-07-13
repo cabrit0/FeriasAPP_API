@@ -58,15 +58,15 @@ const feriasSchema = mongoose.Schema(
       modo: {
         type: String,
       },
-      justificacao: {
-        imageName: {
+      justificacao:{
+        name:{
           type: String,
         },
-        image: {
+        image:{
           data: Buffer,
-          contentType: String,
-        },
-      },
+          contentType: String
+        }
+      }
       //default: [Date],
     },
 

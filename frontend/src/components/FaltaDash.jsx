@@ -9,6 +9,7 @@ import {
   FormLabel,
   RadioGroup,
   Radio,
+  Input,
   Select,
   Button,
   Flex,
@@ -20,14 +21,52 @@ const FaltaDash = () => {
   const [modoFerias, setModoFerias] = useState('');
   const [horasInicio, setHorasInicio] = useState('');
   const [horasFim, setHorasFim] = useState('');
+  const [fotoJustificacao, setFotoJustificacao] = useState(null);
 
   //const test1 = userCtx.feriasCalendar[0];
+
+  const fileSelectedHandler = e => {
+    //console.log(e.target.files[0]);
+    setFotoJustificacao({ data: e.target.files[0] });
+  };
+  console.log(fotoJustificacao);
 
   //console.log(userCtx.userInfo.token);
   const handleSubmitFaltas = async e => {
     try {
+      //FormData Apend
+      const formData = new FormData();
+      /*       formData.append('user', userCtx.userInfo._id);
+      formData.append('name', userCtx.userInfo.name);
+      formData.append('workerNumber', userCtx.userInfo.workerNumber);
+      formData.append('sectionOfWork', userCtx.userInfo.sectionOfWork);
+      formData.append('role', userCtx.userInfo.role);
+      formData.append('horas', `${horasInicio}, ${horasFim}`);
+      formData.append(
+        'dias',
+        `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`
+      );
+      formData.append('totalHorasFerias', userCtx.userInfo.ferias);
+      formData.append('ferias', {
+        horas: `${horasInicio}, ${horasFim}`,
+        dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
+        totalHorasFerias: userCtx.ferias,
+      }); */
+      formData.append('image', { data: fotoJustificacao });
+
+      /* formData.append(
+        'totalHorasFerias',
+        userCtx.ferias *
+          (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff)
+      );
+      formData.append('modo', modoFerias);
+      formData.append('tipo', tipoFerias); */
+
       const config = {
-        headers: { Authorization: `Bearer ${userCtx.userInfo.token}` },
+        headers: {
+          Authorization: `Bearer ${userCtx.userInfo.token}`,
+          /* 'content-type': 'multipart/form-data', */
+        },
       };
 
       const bodyParameters = {
@@ -41,12 +80,14 @@ const FaltaDash = () => {
           horas: `${horasInicio}, ${horasFim}`,
           dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
           totalHorasFerias: userCtx.ferias,
+          //justificacao: { image: fotoJustificacao },
         },
+        image: { data: formData },
         horas: [horasInicio, horasFim],
         dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
         totalHorasFerias:
           userCtx.ferias *
-          (userCtx.horasDiff >= 9 ? (userCtx.horasDiff - 1) : userCtx.horasDiff),
+          (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff),
         tipoFerias: tipoFerias,
         modo: modoFerias,
       };
@@ -57,6 +98,7 @@ const FaltaDash = () => {
     } catch (error) {
       console.log(error);
     }
+    //console.log(formData);
     userCtx.setIsCreatingFalta(false);
   };
 
@@ -84,7 +126,10 @@ const FaltaDash = () => {
   };
   return (
     <Box color={'#aeaeae'} bg="#191B18" borderRadius="lg" p={3}>
-      <FormControl>
+      <FormControl
+        encType="multipart/form-data"
+        role="form" /* encType="multipart/form-data" */
+      >
         <Box p={3}>
           <FormLabel>Tipo de Ferias</FormLabel>
           <RadioGroup
@@ -709,9 +754,22 @@ const FaltaDash = () => {
         <Flex>
           <Box p={3}>
             <Button type="form" onClick={handleSubmitFaltas}>
-              Guardar
+              Enviar
             </Button>
           </Box>
+          {modoFerias === 'justificada' && (
+            <Box p={3}>
+              <Input
+                encType="multipart/form-data"
+                name="image"
+                id="image"
+                type="file"
+                //accept="*"
+                //value={fotoJustificacao}
+                onChange={e => fileSelectedHandler(e)}
+              />
+            </Box>
+          )}
           <Box p={3}>
             <Button onClick={sairFaltas}>Sair</Button>
           </Box>

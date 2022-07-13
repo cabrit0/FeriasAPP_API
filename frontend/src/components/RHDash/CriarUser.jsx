@@ -156,7 +156,7 @@ const CriarUser = () => {
               placeholder="Trabalho"
             >
               <option
-                value="eletrificação"
+                value="eletrificacao"
                 style={{ background: '#191B18', color: '#aeaeae' }}
               >
                 Eletrificação
