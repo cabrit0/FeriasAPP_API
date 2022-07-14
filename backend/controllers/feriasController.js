@@ -82,10 +82,13 @@ const createFerias = asyncHandler(async (req, res) => {
         },
       },
     },
+    image: {
+      data: req.file,
+      contentType: "image/*",
+    },
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
-    //image: req.file,
-  }); /* .populate('userFerias', 'User'); */
+  });
   console.log(feria.horas);
   res.status(200).json(feria);
   totalFerias = totalFerias - 1;

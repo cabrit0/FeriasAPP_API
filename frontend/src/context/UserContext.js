@@ -7,13 +7,14 @@ export const UserContextProvider = props => {
   const [feriasInfo, setFeriasInfo] = useState([]);
   const [feriasCalendar, setFeriasCalendar] = useState(new Date());
   const [ferias, setFerias] = useState('');
+  const [fotoJustificacao, setFotoJustificacao] = useState(null);
   const [horasDiff, setHorasDiff] = useState('');
   const [isCreatingFalta, setIsCreatingFalta] = useState(false);
   const [isCreatingUser, setIsCreatingUser] = useState(false);
   const [isVerFaltas, setIsVerFaltas] = useState(false);
   const [isVerInformacao, setIsVerInformacao] = useState(false);
   const [isProcurarUser, setIsProcurarUser] = useState(false);
-  
+
   // eslint-disable-next-line no-unused-vars
   const showUser = user => setUserInfo([...userInfo, user]);
 
@@ -40,6 +41,8 @@ export const UserContextProvider = props => {
         setFeriasCalendar,
         horasDiff,
         setHorasDiff,
+        fotoJustificacao,
+        setFotoJustificacao,
       }}
     >
       {props.children}

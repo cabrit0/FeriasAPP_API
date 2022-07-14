@@ -21,51 +21,34 @@ const FaltaDash = () => {
   const [modoFerias, setModoFerias] = useState('');
   const [horasInicio, setHorasInicio] = useState('');
   const [horasFim, setHorasFim] = useState('');
-  const [fotoJustificacao, setFotoJustificacao] = useState(null);
 
   //const test1 = userCtx.feriasCalendar[0];
 
   const fileSelectedHandler = e => {
     //console.log(e.target.files[0]);
-    setFotoJustificacao({ data: e.target.files[0] });
+    userCtx.setFotoJustificacao(e.target.files[0]);
   };
-  console.log(fotoJustificacao);
+  console.log(userCtx.fotoJustificacao);
 
   //console.log(userCtx.userInfo.token);
   const handleSubmitFaltas = async e => {
     try {
-      //FormData Apend
       const formData = new FormData();
-      /*       formData.append('user', userCtx.userInfo._id);
-      formData.append('name', userCtx.userInfo.name);
-      formData.append('workerNumber', userCtx.userInfo.workerNumber);
-      formData.append('sectionOfWork', userCtx.userInfo.sectionOfWork);
-      formData.append('role', userCtx.userInfo.role);
-      formData.append('horas', `${horasInicio}, ${horasFim}`);
-      formData.append(
-        'dias',
-        `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`
-      );
-      formData.append('totalHorasFerias', userCtx.userInfo.ferias);
-      formData.append('ferias', {
-        horas: `${horasInicio}, ${horasFim}`,
-        dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
-        totalHorasFerias: userCtx.ferias,
-      }); */
-      formData.append('image', { data: fotoJustificacao });
+      
+      formData.append('image', userCtx.fotoJustificacao);
 
-      /* formData.append(
-        'totalHorasFerias',
-        userCtx.ferias *
-          (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff)
-      );
-      formData.append('modo', modoFerias);
-      formData.append('tipo', tipoFerias); */
+      const feriasBody = Object.fromEntries(formData);
+
+      // Display the key/value pairs
+      /*    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+      } */
+      console.log(feriasBody);
 
       const config = {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${userCtx.userInfo.token}`,
-          /* 'content-type': 'multipart/form-data', */
         },
       };
 
@@ -80,9 +63,9 @@ const FaltaDash = () => {
           horas: `${horasInicio}, ${horasFim}`,
           dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
           totalHorasFerias: userCtx.ferias,
-          //justificacao: { image: fotoJustificacao },
+          //justificacao: feriasBody,
         },
-        image: { data: formData },
+        image: feriasBody,
         horas: [horasInicio, horasFim],
         dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
         totalHorasFerias:

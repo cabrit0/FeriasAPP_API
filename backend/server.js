@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 var cors = require("cors");
 const multer = require("multer");
+const fileupload = require("express-fileupload");
 const colors = require("colors");
 const connectDB = require("./config/db");
 const { errorHandler } = require("./middlewares/errorMiddleware");
@@ -23,6 +24,7 @@ const upload = multer({ storage: fileStorageEngine });
 connectDB();
 const app = express();
 
+//app.use(fileupload());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
