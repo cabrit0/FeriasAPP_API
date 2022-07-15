@@ -76,16 +76,10 @@ const createFerias = asyncHandler(async (req, res) => {
       tipoFerias: req.body.tipoFerias,
       modo: req.body.modo,
       justificacao: {
-        image: {
-          data: req.file,
-          contentType: "image/*",
-        },
+        image: req.file,
       },
     },
-    image: {
-      data: req.file,
-      contentType: "image/*",
-    },
+    image: req.file,
     tipoFerias: req.body.tipoFerias,
     modo: req.body.modo,
   });

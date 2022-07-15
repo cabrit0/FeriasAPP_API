@@ -34,8 +34,8 @@ const FaltaDash = () => {
   const handleSubmitFaltas = async e => {
     try {
       const formData = new FormData();
-      
-      formData.append('image', userCtx.fotoJustificacao);
+
+      formData.append('image', JSON.stringify(userCtx.fotoJustificacao));
 
       const feriasBody = Object.fromEntries(formData);
 
@@ -47,7 +47,8 @@ const FaltaDash = () => {
 
       const config = {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          /* 'content-type': '*',
+          'Content-Type': 'multipart/form-data*', */
           Authorization: `Bearer ${userCtx.userInfo.token}`,
         },
       };
@@ -63,9 +64,9 @@ const FaltaDash = () => {
           horas: `${horasInicio}, ${horasFim}`,
           dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
           totalHorasFerias: userCtx.ferias,
-          //justificacao: feriasBody,
+          //justificacao: { data: formData },
         },
-        image: feriasBody,
+        image: formData,
         horas: [horasInicio, horasFim],
         dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
         totalHorasFerias:
@@ -747,7 +748,7 @@ const FaltaDash = () => {
                 name="image"
                 id="image"
                 type="file"
-                //accept="*"
+                accept="*"
                 //value={fotoJustificacao}
                 onChange={e => fileSelectedHandler(e)}
               />

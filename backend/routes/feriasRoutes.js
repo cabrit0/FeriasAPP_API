@@ -16,11 +16,15 @@ const { protect } = require("../middlewares/authMiddleware");
 const fileStorageEngine = multer.diskStorage({
   destination: "./backend/images",
   filename: (req, file, callback) => {
-    callback(null, Date.now() + " - " + file.originalname);
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
   },
 });
 const upload = multer({
   storage: fileStorageEngine,
+  limits: { fileSize: 1000000 },
 }).single("image"); /* .single('testImage'); */
 
 router.route("/").get(protect, getFerias).post(protect, upload, createFerias);

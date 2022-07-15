@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SubHeader from '../SubHeader';
 import CalendarComponent from '../CalendarComponent';
 import Menu from '../Menu';
-import FaltaDashBoard from '../FaltaDash';
+import FaltaDashBoard from '../FaltasDash';
 import VerFaltasDash from '../VerFaltasDash';
 import Informacao from '../Informacao';
 import ProcurarUserDash from '../ProcurarUserDash';
