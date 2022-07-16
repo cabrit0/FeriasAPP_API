@@ -33,25 +33,42 @@ const FaltaDash = () => {
   //console.log(userCtx.userInfo.token);
   const handleSubmitFaltas = async e => {
     try {
-      const formData = new FormData();
-
-      formData.append('image', JSON.stringify(userCtx.fotoJustificacao));
-
-      const feriasBody = Object.fromEntries(formData);
-
       // Display the key/value pairs
       /*    for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
       } */
-      console.log(feriasBody);
 
       const config = {
         headers: {
-          /* 'content-type': '*',
-          'Content-Type': 'multipart/form-data*', */
+          //'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${userCtx.userInfo.token}`,
         },
       };
+      const formData = new FormData();
+
+      formData.append('user', userCtx.userInfo._id);
+      formData.append('name', userCtx.userInfo.name);
+      formData.append('workerNumber', userCtx.userInfo.workerNumber);
+      formData.append('sectionOfWork', userCtx.userInfo.sectionOfWork);
+      formData.append('role', userCtx.userInfo.role);
+      formData.append('chefia', userCtx.userInfo.chefia);
+      formData.append('ferias', userCtx.userInfo.ferias);
+      formData.append('horas', [`${horasInicio}, ${horasFim}`]);
+      formData.append('dias', [
+        `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
+      ]);
+      formData.append(
+        'totalHorasFerias',
+        userCtx.ferias *
+          (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff)
+      );
+      formData.append('tipoFerias', tipoFerias);
+      formData.append('modoFerias', modoFerias);
+      formData.append('fileName', userCtx.fotoJustificacao.name);
+      formData.append('image', userCtx.fotoJustificacao);
+
+      const feriasBody = Object.fromEntries(formData);
+      console.log(feriasBody);
 
       const bodyParameters = {
         user: userCtx.userInfo._id,
@@ -64,7 +81,7 @@ const FaltaDash = () => {
           horas: `${horasInicio}, ${horasFim}`,
           dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
           totalHorasFerias: userCtx.ferias,
-          //justificacao: { data: formData },
+          image: feriasBody,
         },
         image: formData,
         horas: [horasInicio, horasFim],
@@ -76,9 +93,9 @@ const FaltaDash = () => {
         modo: modoFerias,
       };
 
-      const response = await FeriasFinder.post('/', bodyParameters, config);
+      const response = await FeriasFinder.post('/', feriasBody, config);
       const data = response.data;
-      console.log(data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -744,11 +761,10 @@ const FaltaDash = () => {
           {modoFerias === 'justificada' && (
             <Box p={3}>
               <Input
-                encType="multipart/form-data"
                 name="image"
                 id="image"
                 type="file"
-                accept="*"
+                //accept="*"
                 //value={fotoJustificacao}
                 onChange={e => fileSelectedHandler(e)}
               />
