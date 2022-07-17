@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+//import { UserContext } from '../context/UserContext';
+//import { useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -16,29 +16,33 @@ import {
 } from '@chakra-ui/react';
 
 const UserFaltasDetail = props => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
-  const userCtx = useContext(UserContext);
+  //const userCtx = useContext(UserContext);
 
   //userCtx.setIsProcurarUser(false);
 
-  const sairVerFaltasList = () => {
+  /* const sairVerFaltasList = () => {
     navigate(-1);
-  };
+  }; */
+
+  console.log(props);
 
   //console.log(props.faltasList.ferias.horas);
   const faltasListUser = props.faltasList.map(falta => {
     console.log(falta);
     return (
-      <Tr key={falta}>
-        <Td>{falta.sectionOfWork}</Td>
-        <Td>{falta.ferias.dias}</Td>
-        <Td>{falta.ferias.horas}</Td>
-        <Td>{falta.ferias.modo}</Td>
-        <Td>{falta.ferias.tipoFerias}</Td>
-        <Td>{falta.ferias.chefiaAprove}</Td>
-        <Td>{falta.ferias.RHAprove}</Td>
-      </Tr>
+      falta && (
+        <Tr key={falta}>
+          <Td>{falta.sectionOfWork}</Td>
+          <Td>{falta.ferias.dias}</Td>
+          <Td>{falta.ferias.horas}</Td>
+          <Td>{falta.ferias.modo}</Td>
+          <Td>{falta.ferias.tipoFerias}</Td>
+          <Td>{falta.ferias.chefiaAprove}</Td>
+          <Td>{falta.ferias.RHAprove}</Td>
+        </Tr>
+      )
     );
   });
   return (
@@ -67,7 +71,7 @@ const UserFaltasDetail = props => {
           </Thead>
           <Tbody>{faltasListUser}</Tbody>
         </Table>
-        <Button onClick={sairVerFaltasList} align="rigth" m={1}>
+        <Button onClick={props.sairFaltasList} align="rigth" m={1}>
           Sair
         </Button>
       </TableContainer>

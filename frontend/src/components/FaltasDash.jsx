@@ -73,11 +73,11 @@ const FaltaDash = () => {
         chefia: userCtx.userInfo.chefia,
         ferias: {
           horas: [horasInicio, horasFim],
-          dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
+          dias: [`${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`],
           totalHorasFerias: userCtx.ferias,
           image: feriasBody,
         },
-        image: formData,
+        image: feriasBody,
         horas: [horasInicio, horasFim],
         dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
         totalHorasFerias:
@@ -95,7 +95,7 @@ const FaltaDash = () => {
       };
 
       const response = await FeriasFinder.post('/', bodyParameters, config);
-      const data = response.data;
+      //const data = response.data;
       console.log(response);
     } catch (error) {
       console.log(error);

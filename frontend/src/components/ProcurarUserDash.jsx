@@ -21,7 +21,7 @@ const ProcurarUserDash = () => {
   const userCtx = useContext(UserContext);
   const [userList, setUserList] = useState([]);
   const [userFaltasList, setUserFaltasList] = useState([]);
-  
+
   const handleClidedMenu = () => {
     userCtx.setHasLeftUser(false);
     userCtx.setHasClickedUser(true);
@@ -85,7 +85,17 @@ const ProcurarUserDash = () => {
   const sairProcurarUser = () => {
     userCtx.setIsProcurarUser(false);
   };
-  return ( userCtx.hasClickedUser ? <UserFaltasDetail faltasList={userFaltasList} /> :
+
+  const sairFaltasUserList = () => {
+    userCtx.setHasClickedUser(false);
+    console.log('funcao sair lista')
+  };
+  return userCtx.hasClickedUser ? (
+    <UserFaltasDetail
+      sairFaltasList={sairFaltasUserList}
+      faltasList={userFaltasList}
+    />
+  ) : (
     <Box>
       <TableContainer
         height="400px "
@@ -106,9 +116,7 @@ const ProcurarUserDash = () => {
               <Th>Nº Trabalhador</Th>
             </Tr>
           </Thead>
-          <Tbody>
-           {procurarUserRender}
-          </Tbody>
+          <Tbody>{procurarUserRender}</Tbody>
         </Table>
         <Button onClick={sairProcurarUser} align="rigth" m={1}>
           Sair
