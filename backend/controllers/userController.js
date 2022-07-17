@@ -153,6 +153,8 @@ const getMe = asyncHandler(async (req, res) => {
 // @desc   Get User data
 // @route  GET /api/users/:id
 // @access private
+
+// add token restriction
 const getUserByID = asyncHandler(async (req, res) => {
   const { workerNumber } = req.body;
   const user = await User.findOne({ workerNumber });

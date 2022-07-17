@@ -38,15 +38,9 @@ const FaltaDash = () => {
         console.log(pair[0] + ', ' + pair[1]);
       } */
 
-      const config = {
-        headers: {
-          //'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${userCtx.userInfo.token}`,
-        },
-      };
       const formData = new FormData();
 
-      formData.append('user', userCtx.userInfo._id);
+      /* formData.append('user', userCtx.userInfo._id);
       formData.append('name', userCtx.userInfo.name);
       formData.append('workerNumber', userCtx.userInfo.workerNumber);
       formData.append('sectionOfWork', userCtx.userInfo.sectionOfWork);
@@ -63,8 +57,8 @@ const FaltaDash = () => {
           (userCtx.horasDiff >= 9 ? userCtx.horasDiff - 1 : userCtx.horasDiff)
       );
       formData.append('tipoFerias', tipoFerias);
-      formData.append('modoFerias', modoFerias);
-      formData.append('fileName', userCtx.fotoJustificacao.name);
+      formData.append('modoFerias', modoFerias); */
+      //formData.append('fileName', userCtx.fotoJustificacao.name);
       formData.append('image', userCtx.fotoJustificacao);
 
       const feriasBody = Object.fromEntries(formData);
@@ -78,8 +72,8 @@ const FaltaDash = () => {
         role: userCtx.userInfo.role,
         chefia: userCtx.userInfo.chefia,
         ferias: {
-          horas: `${horasInicio}, ${horasFim}`,
-          dias: `${userCtx.feriasCalendar[0]}, ${userCtx.feriasCalendar[1]}`,
+          horas: [horasInicio, horasFim],
+          dias: [userCtx.feriasCalendar[0], userCtx.feriasCalendar[1]],
           totalHorasFerias: userCtx.ferias,
           image: feriasBody,
         },
@@ -93,7 +87,14 @@ const FaltaDash = () => {
         modo: modoFerias,
       };
 
-      const response = await FeriasFinder.post('/', feriasBody, config);
+      const config = {
+        headers: {
+          //'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${userCtx.userInfo.token}`,
+        },
+      };
+
+      const response = await FeriasFinder.post('/', bodyParameters, config);
       const data = response.data;
       console.log(response);
     } catch (error) {

@@ -61,6 +61,7 @@ const createFerias = asyncHandler(async (req, res) => {
   }
 
   let totalFerias = 21;
+
   const feria = await Ferias.create({
     user: req.user.id,
     name: req.user.name,
@@ -78,6 +79,8 @@ const createFerias = asyncHandler(async (req, res) => {
       justificacao: {
         image: req.file,
       },
+      chefiaAprove: req.user.role === "chefia" ? true : false,
+      RHAprove: req.user.role === "RH" ? true : false,
     },
     image: req.file,
     tipoFerias: req.body.tipoFerias,

@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
 import UserFinder from '../api/UserFinder';
+import FeriasFinder from '../api/FeriasFinder';
+import UserFaltasDetail from './UserFaltasDetail';
 
 import {
   Box,
@@ -18,6 +20,13 @@ import {
 const ProcurarUserDash = () => {
   const userCtx = useContext(UserContext);
   const [userList, setUserList] = useState([]);
+  const [userFaltasList, setUserFaltasList] = useState([]);
+  
+  const handleClidedMenu = () => {
+    userCtx.setHasLeftUser(false);
+    userCtx.setHasClickedUser(true);
+    console.log(userCtx.hasClickedUser);
+  };
 
   const getUsersData = async () => {
     try {
@@ -32,7 +41,7 @@ const ProcurarUserDash = () => {
       console.log(error);
     }
   };
-  console.log(userList);
+  //console.log(userList);
 
   useEffect(() => {
     getUsersData();
@@ -41,7 +50,7 @@ const ProcurarUserDash = () => {
 
   const procurarUserRender = userList.map(users => {
     return (
-      <Tr key={users}>
+      <Tr onClick={() => handleUserSelect(users[1].workerNumber)} key={users}>
         <Td>{users[1].name}</Td>
         <Td>{users[1].sectionOfWork}</Td>
         <Td>{users[1].role}</Td>
@@ -50,10 +59,33 @@ const ProcurarUserDash = () => {
     );
   });
 
+  const handleUserSelect = async workN => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userCtx.userInfo.token}`,
+          'content-type': 'application/x-www-form-urlencoded',
+          data: workN,
+        },
+      };
+      const response = await FeriasFinder.get('/', config /* bodyConfig */);
+      const data = response.data.data;
+
+      const getFilteredUserFaltas = data.filter(
+        user => user.workerNumber === workN
+      );
+      setUserFaltasList(getFilteredUserFaltas);
+      console.log(getFilteredUserFaltas);
+    } catch (error) {
+      console.log(error);
+    }
+    handleClidedMenu();
+  };
+
   const sairProcurarUser = () => {
     userCtx.setIsProcurarUser(false);
   };
-  return (
+  return ( userCtx.hasClickedUser ? <UserFaltasDetail faltasList={userFaltasList} /> :
     <Box>
       <TableContainer
         height="400px "
@@ -74,7 +106,9 @@ const ProcurarUserDash = () => {
               <Th>Nº Trabalhador</Th>
             </Tr>
           </Thead>
-          <Tbody>{procurarUserRender}</Tbody>
+          <Tbody>
+           {procurarUserRender}
+          </Tbody>
         </Table>
         <Button onClick={sairProcurarUser} align="rigth" m={1}>
           Sair
