@@ -30,13 +30,27 @@ const UserFaltasDetail = props => {
 
   //console.log(props.faltasList.ferias.horas);
   const faltasListUser = props.faltasList.map(falta => {
-    console.log(falta);
+    //console.log(falta.ferias.dias[0][1]);
+
+    function convertDate(inputFormat) {
+      function pad(s) {
+        return s < 10 ? '0' + s : s;
+      }
+      var d = new Date(inputFormat);
+      return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join(
+        '-'
+      );
+    }
+    const first = convertDate(falta.ferias.dias[0][0]);
+    const second = convertDate(falta.ferias.dias[0][1]);
+    console.log(falta.ferias.horas[0][0]);
+
     return (
       falta && (
         <Tr key={falta}>
           <Td>{falta.sectionOfWork}</Td>
-          <Td>{falta.ferias.dias}</Td>
-          <Td>{falta.ferias.horas}</Td>
+          <Td>{first + ' até ' + second}</Td>
+          <Td>{`${falta.ferias.horas[0][0]}h até ${falta.ferias.horas[0][1]}h`}</Td>
           <Td>{falta.ferias.modo}</Td>
           <Td>{falta.ferias.tipoFerias}</Td>
           <Td>{falta.ferias.chefiaAprove}</Td>
@@ -49,7 +63,7 @@ const UserFaltasDetail = props => {
     <Box>
       <TableContainer
         height="400px "
-        width="1000px"
+        width="1050px"
         color={'#aeaeae'}
         bg="#191B18"
         borderRadius="lg"

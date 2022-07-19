@@ -39,7 +39,7 @@ const Header = () => {
           align={'center'}
           color={'#EFFFF4'}
         >
-          FERIAS APP
+          DINEF3RIAS APP
         </Text>
         <Text as="h1" align={'center'} color={'#EFFFF4'}>
           {actualDate}
