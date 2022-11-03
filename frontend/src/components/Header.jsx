@@ -5,9 +5,9 @@ const Header = () => {
   const getCurrentDate = () => {
     let date = new Date();
     let dateStr =
-      ('00' + (date.getMonth() + 1)).slice(-2) +
-      '/' +
       ('00' + date.getDate()).slice(-2) +
+      '/' +
+      ('00' + (date.getMonth() + 1)).slice(-2) +
       '/' +
       date.getFullYear() +
       `\n` +
@@ -39,7 +39,7 @@ const Header = () => {
           align={'center'}
           color={'#EFFFF4'}
         >
-          DINEF3RIAS APP
+          FERIAS APP
         </Text>
         <Text as="h1" align={'center'} color={'#EFFFF4'}>
           {actualDate}
