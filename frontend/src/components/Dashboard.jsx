@@ -76,7 +76,7 @@ const Dashboard = () => {
   const getWeather = async () => {
     try {
       const weatherResponse = await axios.get(
-        'https://api.weatherapi.com/v1/current.json?key=dea616693be34cf6983182956220707&q=castelobranco&aqi=no'
+        'https://api.weatherapi.com/v1/current.json?key=dea616693be34cf6983182956220707&q=castelo branco&aqi=no'
       );
       setWeatherInfo(weatherResponse.data.current);
     } catch (error) {
